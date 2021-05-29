@@ -71,6 +71,28 @@ wilcox.test(views,views_median, paired = FALSE, alternative = "two.sided", conf.
 
 
 # Kruskal-Wallis Test
+views_30s = videos_data$lifetime_unique_30s_views
+views_60s = videos_data$lifetime_unique_60s_video_views
+views_95p = videos_data$lifetime_unique_watches_at_95p
+
+# Kruskal-Wallis Test: Solving for H
+rank.30s60s95p = rank(c(views_30s, views_60s, views_95p))
+rank.30s60s95p
+R1 = sum(rank(c(views_30s, views_60s, views_95p))[1:299])
+R2 = sum(rank(c(views_30s, views_60s, views_95p))[300:598])
+R3 = sum(rank(c(views_30s, views_60s, views_95p))[599:897])
+N = length(c(views_30s, views_60s, views_95p))
+H = (12/(N*(N+1)))*(R1^2/length(views_30s)+R2^2/length(views_60s)+
+                    R3^2/length(views_95p))-3*(N+1)
+H
+
+# Kruskal-Wallis Test: Actual test in R
+kruskal.test(list(views_30s, views_60s, views_95p)) #or
+a = c(views_30s, views_60s, views_95p)
+g = factor(rep(1:3, c(299, 299, 299)))
+kruskal.test(a~g)
+
+
 
 
 
