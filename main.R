@@ -93,8 +93,21 @@ g = factor(rep(1:3, c(299, 299, 299)))
 kruskal.test(a~g)
 
 # Friedman Rank Sum Test or Friedman Test
-# Continuous
 
+# Friedman Rank Sum Test: Ordinal
+VLivemass       = c(67103,14035,9810,9) #V Live Mass
+VPamalandog     = c(176,27,17,5) #Video PALANDONG
+VAJPReflections = c(3702, 692, 483,197) #Video AJP Reflections
+VRCACVlogs      = c(468,64,11,11) #Video RCAC Vlogs
+VHighlights     = c(7193,2030,1229,290) #Video Highlights
+SVRCACGuests    = c(783,0,167,0) #Shared Video Guesting
+
+fm = matrix (c(VLivemass,VPamalandog,VAJPReflections,VRCACVlogs,VHighlights,SVRCACGuests),nrow = 6, byrow = TRUE, dimnames = (list(1:6,c("3 sec", "30 sec", "60 sec", "95% of the video"))))
+
+fm
+friedman.test(fm)
+
+# Friedman Rank Sum Test: Continuous
 #videos_RoundingTimes = matrix(
 #  c(views_30s, views_60s, views_95p),
 #  nrow = 299,
