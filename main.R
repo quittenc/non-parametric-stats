@@ -30,9 +30,24 @@ views_result = 2 * dbinom(views_r, views_n,1/2)
 views_result # 8.37 < 0.01 is false, do not reject the null hypothesis
 
 # Sign Test (Two-sample)
-date_posted = posts_data$date_posted
-time_posted = format(date_posted, format = "%H-%M")
-  
+engagedUsersAfternoon = sqldf("SELECT * FROM posts_data WHERE X24_hour_format BETWEEN '15:00:00' AND '18:00:00' LIMIT 30")
+engagedUsersEvening = sqldf("SELECT * FROM posts_data WHERE X24_hour_format BETWEEN '18:00:00' AND '22:00:00' LIMIT 30")
+
+diff = engagedUsersAfternoon$lifetime_engaged_users - engagedUsersEvening$lifetime_engaged_users
+diff
+
+rpos = length(diff[diff>0])
+rpos
+rneg = length(diff[diff<0])
+rneg
+
+r=min(rpos,rneg)
+r
+
+n=rpos+rneg
+n
+
+dbinom(2,14,1/2)
 
 # Wilcoxon Rank Sum Test
 video_posts_data = sqldf("SELECT * FROM posts_data WHERE type = 'Video'")
@@ -68,7 +83,10 @@ views_median
 wilcox.test(views,views_median, paired = FALSE, alternative = "two.sided", conf.level = 0.95)
 
 # Wilcoxon Signed Rank Sum Test (Two-sample)
+engagedUsersAfternoon = sqldf("SELECT * FROM posts_data WHERE X24_hour_format BETWEEN '15:00:00' AND '18:00:00'")
+engagedUsersEvening = sqldf("SELECT * FROM posts_data WHERE X24_hour_format BETWEEN '18:00:00' AND '22:00:00'")
 
+wilcox.test(post3pm6pm$lifetime_engaged_users, post6pm9pm$lifetime_engaged_users, paired=TRUE, conf.level = 0.95)
 
 # Kruskal-Wallis Test
 views_30s = videos_data$lifetime_unique_30s_views
