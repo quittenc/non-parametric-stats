@@ -92,6 +92,18 @@ a = c(views_30s, views_60s, views_95p)
 g = factor(rep(1:3, c(299, 299, 299)))
 kruskal.test(a~g)
 
+# Friedman Rank Sum Test or Friedman Test
+# Continuous
+
+#videos_RoundingTimes = matrix(
+#  c(views_30s, views_60s, views_95p),
+#  nrow = 299,
+#  byrow = TRUE,
+#  dimnames = list(1 : 299, c("Views 30s", "Views 60s", "Views 95%")))
+
+videos_RoundingTimes <- cbind(views_30s, views_60s, views_95p)
+friedman.test(videos_RoundingTimes)
+
 
 
 
