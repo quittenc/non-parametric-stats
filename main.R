@@ -117,8 +117,18 @@ friedman.test(fm)
 videos_RoundingTimes <- cbind(views_30s, views_60s, views_95p)
 friedman.test(videos_RoundingTimes)
 
+# Spearman Rank Correlation Coefficient
 
+# impressions
+who_liked = posts_data$lifetime_post_impressions_who_liked
+who_didnt = posts_data$lifetime_post_total_impressions - posts_data$lifetime_post_impressions_who_liked
 
-
-
+d2 = (who_liked - who_didnt) ^ 2
+sum = sum(d2)
+r = 1-((length(who_liked)*sum)/(length(who_didnt)*(length(who_didnt)^2-1)))
+r # or
+cor.test(who_liked, who_didnt, method="spearman") # or
+cor(who_liked,who_didnt)
+plot(who_liked,who_didnt,xlab="Who Liked",ylab="Who Didn't Like")
+abline(lm(who_liked~who_didnt), col="red")
 
